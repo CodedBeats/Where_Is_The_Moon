@@ -1,0 +1,1 @@
+// load inverted textured globe with stars
