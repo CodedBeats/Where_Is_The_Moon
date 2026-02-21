@@ -1,1 +1,0 @@
-// create renderer, camera, lights

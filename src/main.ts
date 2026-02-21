@@ -1,10 +1,34 @@
+// style
 import "./styles/main.css";
-import viteLogo from "/vite.svg";
+// scene
+import { createRenderer } from './scene/renderer'
+import { createGlobe } from './scene/globe'
+import { createMoon } from './scene/moon'
+// ui/hud
+import { createButton } from './ui/controls'
 
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-    <div>
-        <img src="${viteLogo}" class="logo" alt="Vite logo" />
-        <p>A simple mobile Web app that shows you where the moon is relative to your current location.</p>
-    </div>
-`;
+// this bitch just coordintes shit
+
+
+// ---------- Setup ----------
+const { scene, camera, renderer } = createRenderer()
+
+const globe = createGlobe()
+scene.add(globe)
+
+const moon = createMoon()
+scene.add(moon)
+
+// ---------- UI ----------
+createButton(() => {
+    moon.rotation.z += 0.2
+})
+
+// ---------- Loop ----------
+function animate() {
+    requestAnimationFrame(animate)
+    renderer.render(scene, camera)
+}
+
+animate()
 
