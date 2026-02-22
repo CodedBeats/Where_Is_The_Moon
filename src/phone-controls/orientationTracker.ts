@@ -7,12 +7,12 @@ import {
 // helpers
 import { deviceEulerToQuaternion } from "../utility/helpers";
 
-// === Testing === //
-// alpha: Toll. left 1/4 turn = 90. right 1/4 turn = 270. 1/2 turn = 190
-// beta: Pitch. stand straight = 90. sit flat down = (-)0. look straight up = (-)180
-// gama: Yaw. so inconsistent, aparently it combines with beta
+
 
 let baselineQuaternion: THREE.Quaternion | null = null;
+let smoothedQuaternion = new THREE.Quaternion();
+let hasInitialised = false;
+
 
 // get device permission, track orientation and show logs
 export const startOrientationTracking = async (onUpdate: (o: OrientationResult) => void): Promise<void> => {
@@ -49,31 +49,47 @@ const handleOrientation = (
     event: DeviceOrientationEvent,
     onUpdate: (o: OrientationResult) => void
 ) => {
+    // order: sensor → quaternion → smoothing → euler → clamp pitch
+
+
     const { alpha, beta, gamma } = event;
     if (alpha == null || beta == null || gamma == null) return;
 
     // get saved by stackoverflow funcs
-    const q = deviceEulerToQuaternion(alpha, beta, gamma);
+    const rawQ = deviceEulerToQuaternion(alpha, beta, gamma);
 
     // set forward origin if not yet set
     if (!baselineQuaternion) {
-        baselineQuaternion = q.clone().invert();
+        baselineQuaternion = rawQ.clone().invert();
+    }
+    const correctedQ = baselineQuaternion.clone().multiply(rawQ);
+
+    // first frame -> snap instantly
+    if (!hasInitialised) {
+        smoothedQuaternion.copy(correctedQ);
+        hasInitialised = true;
     }
 
-    // apply baseline offset
-    const corrected = baselineQuaternion?.clone().multiply(q);
+    // SMOOTHING (spherical interpolation)
+    // 0.05 = very smooth (and heavy), 0.15 = balanced, 0.25 = responsive, 0.4 = almost raw :)
+    const SMOOTH_FACTOR = 0.15; 
+    smoothedQuaternion.slerp(correctedQ, SMOOTH_FACTOR);
 
+    // convert to Euler for logging / clamping
     const euler = new THREE.Euler().setFromQuaternion(
-        corrected!,
+        smoothedQuaternion!,
         // YXZ because it matches: Yaw, Pitch Roll
         "YXZ"
     );
 
-    const result: OrientationResult = {
-        yaw: THREE.MathUtils.radToDeg(euler.y),
-        pitch: THREE.MathUtils.radToDeg(euler.x),
-        roll: THREE.MathUtils.radToDeg(euler.z),
-    };
+    let pitch = THREE.MathUtils.radToDeg(euler.x);
+    const yaw = THREE.MathUtils.radToDeg(euler.y);
+    const roll = THREE.MathUtils.radToDeg(euler.z);
+
+    // clamp after smoothing
+    pitch = Math.max(-85, Math.min(85, pitch));
+
+    const result: OrientationResult = { yaw, pitch, roll };
 
     onUpdate(result);
 };
@@ -82,4 +98,6 @@ const handleOrientation = (
 // helper for UX
 export function recenter() {
     baselineQuaternion = null;
+    // reset smoothing too
+    hasInitialised = false;
 }
