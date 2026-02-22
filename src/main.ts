@@ -23,9 +23,9 @@ scene.add(globe)
 
 
 // ---------- UI ----------
-// createButton(() => {
-//     moon.rotation.y += 0.2
-// })
+createButton(() => {
+    camera.rotation.set(0, camera.rotation.y + 0.01, 0)
+})
 
 
 // ---------- Loop ----------
@@ -33,7 +33,7 @@ function animate() {
     requestAnimationFrame(animate)
 
     // rotate the globe arounf the y-axis
-    globe.rotation.y += 0.0001; 
+    // globe.rotation.y += 0.0001; 
 
     // essentially refresh with new scene
     renderer.render(scene, camera)
