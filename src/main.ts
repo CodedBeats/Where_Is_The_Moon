@@ -5,7 +5,9 @@ import { createRenderer } from './scene/renderer'
 import { createGlobe } from './scene/globe'
 import { createMoon } from './scene/moon'
 // ui/hud
-import { createButton } from './ui/controls'
+import { rotateCameraBtn, getPhoneRotation } from './ui/btns'
+// phone controls
+import { startOrientationLogs } from "./phone-controls/phoneRotation"
 
 // this bitch just coordintes shit
 
@@ -23,8 +25,11 @@ scene.add(globe)
 
 
 // ---------- UI ----------
-createButton(() => {
+rotateCameraBtn(() => {
     camera.rotation.set(0, camera.rotation.y + 0.01, 0)
+})
+getPhoneRotation(() => {
+    startOrientationLogs()
 })
 
 
