@@ -2,7 +2,7 @@
 
 export function createButton(onClick: () => void) {
     const button = document.createElement("button");
-    button.innerText = "Change Config";
+    button.innerText = "rotateY";
 
     button.style.position = "fixed";
     button.style.left = "4%";
