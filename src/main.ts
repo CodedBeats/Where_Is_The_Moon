@@ -1,3 +1,5 @@
+// dependencies
+import * as THREE from "three";
 // style
 import "./styles/main.css";
 // scene
@@ -5,9 +7,9 @@ import { createRenderer } from './scene/renderer'
 import { createGlobe } from './scene/globe'
 import { createMoon } from './scene/moon'
 // ui/hud
-import { rotateCameraBtn, getPhoneRotation } from './ui/btns'
-// phone controls
-import { startOrientationLogs } from "./phone-controls/phoneRotation"
+import { rotateCameraBtn, startPhoneOrientationBtn, recenterBtn } from './ui/btns'
+// phone orientation controls
+import { startOrientationTracking, recenter } from "./phone-controls/orientationTracker"
 
 // this bitch just coordintes shit
 
@@ -28,8 +30,17 @@ scene.add(globe)
 rotateCameraBtn(() => {
     camera.rotation.set(0, camera.rotation.y + 0.01, 0)
 })
-getPhoneRotation(() => {
-    startOrientationLogs()
+recenterBtn(() => {
+    recenter()
+})
+startPhoneOrientationBtn(() => {
+    startOrientationTracking((o) => {
+        camera.rotation.set(
+            THREE.MathUtils.degToRad(o.pitch),
+            THREE.MathUtils.degToRad(o.yaw),
+            THREE.MathUtils.degToRad(o.roll)
+        );
+    })
 })
 
 
