@@ -13,20 +13,29 @@ import { createButton } from './ui/controls'
 // ---------- Setup ----------
 const { scene, camera, renderer } = createRenderer()
 
+// create globe / background space
 const globe = createGlobe()
 scene.add(globe)
 
-const moon = createMoon()
-scene.add(moon)
+// create moon
+// const moon = createMoon()
+// scene.add(moon)
+
 
 // ---------- UI ----------
-createButton(() => {
-    moon.rotation.z += 0.2
-})
+// createButton(() => {
+//     moon.rotation.y += 0.2
+// })
+
 
 // ---------- Loop ----------
 function animate() {
     requestAnimationFrame(animate)
+
+    // rotate the globe arounf the y-axis
+    globe.rotation.y += 0.0001; 
+
+    // essentially refresh with new scene
     renderer.render(scene, camera)
 }
 
