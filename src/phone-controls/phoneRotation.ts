@@ -1,6 +1,11 @@
 // interface types
 import { type OrientationClassification, type OrientationData } from "../interfaces/phoneRotation"
 
+// === Testing === //
+// alpha: Toll. left 1/4 turn = 90. right 1/4 turn = 270. 1/2 turn = 190
+// beta: Pitch. stand straight = 90. sit flat down = (-)0. look straight up = (-)180
+// gama: Yaw. so inconsistent, aparently it combines with beta
+
 // get device permission and show logs on device orientation change
 export const startOrientationLogs = async (): Promise<void> => {
     // guard
