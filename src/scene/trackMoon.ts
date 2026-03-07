@@ -5,6 +5,11 @@ export function trackMoon(moonMesh: THREE.Mesh) {
 
     // calculate relative postion to center of globe
     
-    // move mesh to that location
-    moonMesh.position.set(0, 0, -70);
+    // move moon to that location
+    // temp
+    moonMesh.position.set(0, 0, -10);
+
+    // rotate moon to apropriate angle
+    // temp
+    moonMesh.rotation.set(0, 0, 20);
 }
