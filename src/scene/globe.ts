@@ -6,7 +6,7 @@ export function createGlobe() {
     
     // texture of earth
     const textureLoader = new THREE.TextureLoader();
-    const texture = textureLoader.load("/textures/download/8k_stars_milky_way.jpg"); 
+    const texture = textureLoader.load("src/assets/8k_stars_milky_way.jpg"); 
 
     const material = new THREE.MeshBasicMaterial({
         map: texture,
