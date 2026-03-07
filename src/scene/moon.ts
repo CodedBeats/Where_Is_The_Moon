@@ -1,19 +1,15 @@
 import * as THREE from "three";
 
 export function createMoon() {
-    const geometry = new THREE.CircleGeometry(1, 32);
-    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const geometry = new THREE.CircleGeometry(3, 32);
+    const material = new THREE.MeshBasicMaterial({
+        // use solar texture
+        color: 0xffffff,
+        side: THREE.DoubleSide
+    });
 
-    return new THREE.Mesh(geometry, material);
+    // create moon mesh
+    const moon = new THREE.Mesh(geometry, material);
+
+    return moon 
 }
-
-/**
- * PLANS
- * 
- * get user location
- * get moon location
- * 
- * aproximate place on globe to place moon model given the user and moon location
- * 
- * ...sounds easy enough
- */
