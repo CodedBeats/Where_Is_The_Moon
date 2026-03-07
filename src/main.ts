@@ -8,7 +8,8 @@ import { createGlobe } from './scene/globe'
 import { createMoon } from './scene/moon'
 import { trackMoon } from "./scene/trackMoon";
 // ui/hud
-import { rotateCameraBtn, startPhoneOrientationBtn, recenterBtn } from './ui/btns'
+import { rotateCameraBtn, allowPhoneOrientationBtn, recenterBtn, logDataBtn } from './ui/btns'
+import { logDataHelper } from "./ui/logHelper";
 // phone orientation controls
 import { startOrientationTracking, recenter } from "./phone-controls/orientationTracker"
 
@@ -26,7 +27,7 @@ scene.add(globe)
 const moon = createMoon()
 scene.add(moon)
 // track moon
-trackMoon(moon)
+const xyzCoords = trackMoon(moon)
 
 
 
@@ -37,7 +38,7 @@ rotateCameraBtn(() => {
 recenterBtn(() => {
     recenter()
 })
-startPhoneOrientationBtn(() => {
+allowPhoneOrientationBtn(() => {
     startOrientationTracking((o) => {
         camera.rotation.set(
             THREE.MathUtils.degToRad(o.pitch),
@@ -45,6 +46,9 @@ startPhoneOrientationBtn(() => {
             THREE.MathUtils.degToRad(o.roll)
         );
     })
+})
+logDataBtn(() => {
+    logDataHelper(xyzCoords)
 })
 
 

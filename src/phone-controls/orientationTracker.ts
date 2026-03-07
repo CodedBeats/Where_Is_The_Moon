@@ -44,6 +44,7 @@ export const startOrientationTracking = async (onUpdate: (o: OrientationResult) 
     );
 };
 
+
 // handle determining what orientation of phone is
 const handleOrientation = (
     event: DeviceOrientationEvent,

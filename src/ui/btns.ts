@@ -19,7 +19,7 @@ export function rotateCameraBtn(onClick: () => void) {
 
 
 // temp trigger to get phone rotation
-export const startPhoneOrientationBtn = (onClick: () => void) => {
+export const allowPhoneOrientationBtn = (onClick: () => void) => {
     const button = document.createElement("button");
     button.innerText = "Rotation Logs";
 
@@ -44,6 +44,24 @@ export const recenterBtn = (onClick: () => void) => {
 
     button.style.position = "fixed";
     button.style.left = "60%";
+    button.style.bottom = "4%";
+    button.style.padding = "3% 5%";
+    button.style.fontSize = "3vw";
+
+    button.onclick = onClick;
+
+    document.body.appendChild(button);
+
+    return button;
+}
+
+
+export const logDataBtn = (onClick: () => void) => {
+    const button = document.createElement("button");
+    button.innerText = "log data";
+
+    button.style.position = "fixed";
+    button.style.left = "70%";
     button.style.bottom = "4%";
     button.style.padding = "3% 5%";
     button.style.fontSize = "3vw";
