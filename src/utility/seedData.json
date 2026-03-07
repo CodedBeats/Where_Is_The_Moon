@@ -1,0 +1,17 @@
+{
+  "status": "ok",
+  "error": null,
+  "data": {
+    "date": "03-20-2025",
+    "time": "14:30",
+    "coordinates": {
+      "latitude": -37.8136,
+      "longitude": 144.9631
+    },
+    "moon": {
+      "altitude": -0.407908976399288,
+      "azimuth": 1.4720499058762104,
+      "distance": 404332.6834067969
+    }
+  }
+}
