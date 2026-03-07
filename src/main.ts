@@ -6,6 +6,7 @@ import "./styles/main.css";
 import { createRenderer } from './scene/renderer'
 import { createGlobe } from './scene/globe'
 import { createMoon } from './scene/moon'
+import { trackMoon } from "./scene/trackMoon";
 // ui/hud
 import { rotateCameraBtn, startPhoneOrientationBtn, recenterBtn } from './ui/btns'
 // phone orientation controls
@@ -22,8 +23,11 @@ const globe = createGlobe()
 scene.add(globe)
 
 // create moon
-// const moon = createMoon()
-// scene.add(moon)
+const moon = createMoon()
+scene.add(moon)
+// track moon
+trackMoon(moon)
+
 
 
 // ---------- UI ----------
@@ -48,8 +52,7 @@ startPhoneOrientationBtn(() => {
 function animate() {
     requestAnimationFrame(animate)
 
-    // rotate the globe arounf the y-axis
-    // globe.rotation.y += 0.0001; 
+    // constantly track the moon? probably not
 
     // essentially refresh with new scene
     renderer.render(scene, camera)

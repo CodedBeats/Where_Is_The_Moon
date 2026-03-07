@@ -1,19 +1,22 @@
 import * as THREE from "three";
 
 export function createMoon() {
-    const geometry = new THREE.CircleGeometry(1, 32);
-    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const geometry = new THREE.CircleGeometry(3, 32);
+    
+    // texture of moon
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load("src/assets/8k_moon.jpg"); 
 
-    return new THREE.Mesh(geometry, material);
+    // set center of rotation to middle of texture
+    texture.center.set(0.5, 0.5);
+
+    const material = new THREE.MeshBasicMaterial({
+        map: texture,
+        side: THREE.DoubleSide
+    });
+
+    // create moon mesh
+    const moon = new THREE.Mesh(geometry, material);
+
+    return moon 
 }
-
-/**
- * PLANS
- * 
- * get user location
- * get moon location
- * 
- * aproximate place on globe to place moon model given the user and moon location
- * 
- * ...sounds easy enough
- */
