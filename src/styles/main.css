@@ -21,3 +21,23 @@ body {
     min-width: 320px;
     min-height: 100vh;
 }
+
+/* hide modal by default */
+#log-modal {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(60, 60, 60);
+    color: white;
+    text-align: center;
+}
+.modal-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    gap: 5%;
+    font-size: 3rem;
+}

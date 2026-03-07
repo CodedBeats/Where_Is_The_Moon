@@ -7,20 +7,22 @@ import { tempMoonData } from "../api/fetchMoonPosition";
 export function trackMoon(moonMesh: THREE.Mesh) {
     // fetch moon location with api
 
-    // calculate relative postion to center of globe
+    // convert cords to cartisan plane
     const { x, y, z} = moonToXYZ(
         tempMoonData.data.moon.altitude,
         tempMoonData.data.moon.azimuth,
         tempMoonData.data.moon.distance,
     )
+    // calculate relative postion to center of globe
+    const moonVec = new THREE.Vector3(x, y, z);
 
-    // move moon to that location
-    moonMesh.position.set(x, y, z);
-    
-    // temp
-    // moonMesh.position.set(0, 0, -10);
+    moonMesh.position.copy(
+        moonVec.setLength(95)
+    );
 
     // rotate moon to apropriate angle
     // temp
-    moonMesh.rotation.set(0, 0, 20);
+    // moonMesh.rotation.set(0, 0, 20);
+
+    return `x: ${moonVec.x}, y: ${moonVec.y}, z: ${moonVec.z}`
 }
