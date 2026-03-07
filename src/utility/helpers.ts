@@ -34,3 +34,19 @@ export const deviceEulerToQuaternion = (
 
     return quaternion;
 }
+
+
+// convert spehrical coords from the moon API inro cartisian coords with math I (should) don't understand
+export const moonToXYZ = (
+    altitude: number, azimuth: number, radius: number = 90
+): {
+    x: number,
+    y: number,
+    z: number,
+} => {
+    const x = radius * Math.cos(altitude) * Math.sin(azimuth)
+    const y = radius * Math.sin(altitude)
+    const z = radius * Math.cos(altitude) * Math.cos(azimuth)
+
+    return { x, y, z }
+}
